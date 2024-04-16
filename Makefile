@@ -1,22 +1,23 @@
 CXX=g++
 CXXFLAGS=-std=c++23 -Wall -Wextra -g
+LIB=liblamport_mutex.so
+
+CC=gcc
+CFLAGS=-Wall -Wextra -g -lpthread
 BIN=race_condition
 
 SRC=$(wildcard *.cpp)
 OBJ=$(SRC:%.cpp=%.o)
 
-default: bin/lib_lamport_mutex.so src/main.c
-	gcc -Wall -Wextra -g -L bin -lpthread -o race_condition src/main.c
+default: lib main.c
+	$(CC) $(CFLAGS) -L . -o $(BIN) main.c
 
-lib: libs/lamport_mutex/src/main.cpp
-	$(CXX) $(CXXFLAGS) -fPIC -shared -o bin/lib_lamport_mutex.so $^
+lib: liblamport_mutex/liblamport_mutex.cpp
+	$(CXX) $(CXXFLAGS) -fPIC -shared -o $(LIB) $^
 
-no-lib: src/main.c
-	gcc -Wall -Wextra -g -lpthread -o race_condition src/main.c
-
-%.o: %.c
-	$(CXX) $@ -c $<
+no-lib: main.c
+	$(CC) $(CFLAGS) -o $(BIN) main.c
 
 clean:
-	rm -f **/*.o **/*.so $(BIN)
+	rm -f *.o *.so $(BIN)
 
