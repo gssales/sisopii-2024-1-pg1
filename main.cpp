@@ -26,7 +26,7 @@ struct thread_info {
 
 static void * thread_start(void *arg)
 {
-  struct thread_info *tinfo = arg;
+  struct thread_info *tinfo = static_cast<struct thread_info *>(arg);
   
   printf("Hello! I'm thread %d, id %lu!\n", tinfo->num, tinfo->id);
   for (int i = 0; i < num_rep; i++)

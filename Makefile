@@ -1,13 +1,10 @@
 CXX=g++
 CXXFLAGS=-std=c++23 -Wall -Wextra -g
 LIB=libmutex.so
-
-CC=gcc
-CFLAGS=-Wall -Wextra -g -lpthread
 BIN=race_condition
 
-default: libmutex.so main.c
-	$(CC) $(CFLAGS) -o $(BIN) main.c -L. -lmutex
+default: libmutex.so main.cpp
+	$(CXX) $(CXXFLAGS) -o $(BIN) main.cpp -L. -lmutex
 
 libmutex.so: mutex.o
 	$(CXX) $(CXXFLAGS) -shared -o $(LIB) mutex.o
@@ -18,3 +15,5 @@ mutex.o: libmutex/mutex.cpp
 clean:
 	rm -f *.o *.so $(BIN)
 
+run: $(BIN)
+	LD_LIBRARY_PATH=. ./race_condition
