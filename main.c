@@ -6,6 +6,8 @@
 #include <errno.h>
 #include <ctype.h>
 
+#include "libmutex/mutex.h"
+
 #define handle_error_en(en, msg) \
   do { errno = en; perror(msg); exit(EXIT_FAILURE); } while (0)
 
@@ -39,6 +41,8 @@ int main(int argc, char **argv)
   struct thread_info tinfo[num_threads];
   pthread_attr_t attr;
   void *res;
+
+	print_test();
   
   if (argc > 1)
     num_rep = strtol(argv[1], NULL, 10);
