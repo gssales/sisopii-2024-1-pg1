@@ -29,8 +29,11 @@ static void * thread_start(void *arg)
   struct thread_info *tinfo = static_cast<struct thread_info *>(arg);
   
   printf("Hello! I'm thread %d, id %lu!\n", tinfo->num, tinfo->id);
-  for (int i = 0; i < num_rep; i++)
+  for (int i = 0; i < num_rep; i++) {
+		lamport_mutex_lock(tinfo->num);
     shared_var = shared_var + 1;
+		lamport_mutex_unlock(tinfo->num);
+	}
   
   return 0x0;
 }
@@ -42,7 +45,7 @@ int main(int argc, char **argv)
   pthread_attr_t attr;
   void *res;
 
-	print_test();
+	lamport_mutex_init();
   
   if (argc > 1)
     num_rep = strtol(argv[1], NULL, 10);

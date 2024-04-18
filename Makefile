@@ -6,14 +6,17 @@ BIN=race_condition
 default: libmutex.so main.cpp
 	$(CXX) $(CXXFLAGS) -o $(BIN) main.cpp -L. -lmutex
 
-libmutex.so: mutex.o
-	$(CXX) $(CXXFLAGS) -shared -o $(LIB) mutex.o
-
-mutex.o: libmutex/mutex.cpp
-	$(CXX) $(CXXFLAGS) -fpic -shared -c libmutex/mutex.cpp
+libmutex.so: libmutex/mutex.cpp
+	$(CXX) $(CXXFLAGS) -fpic -shared -o $(LIB) libmutex/mutex.cpp
 
 clean:
-	rm -f *.o *.so $(BIN)
+	rm -f *.o *.so $(BIN) thread_mutex
+
+thread_mutex: thread_mutex.c
+	gcc -o thread_mutex thread_mutex.c -lpthread
 
 run: $(BIN)
 	LD_LIBRARY_PATH=. ./race_condition
+
+test: thread_mutex
+	time -p ./thread_mutex |& sed -Enr 's/real (.*)/\1/p'

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		body {
+			transition: all 1s;
+		}
+		body[data-theme="dark"] {
+			background-color: #0c0c0c;
+			color: #ececec;
+		}
+
+		div#grade {
+			font-family: 'Comic Sans MS', sans-serif;
+			font-size: xx-large;
+		}
+
+		div#grade:after {
+			content: "F";
+		}
+
+		div#grade[data-score="10"]:after,
+		div#grade[data-score="9"]:after {
+			content: 'A';
+		}
+
+		div#grade[data-score="8"]:after {
+			content: 'B';
+		}
+
+		div#grade[data-score="7"]:after {
+			content: 'C';
+		}
+
+		div#grade[data-score="6"]:after {
+			content: 'D';
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body >
+	<div data-score="5" id="grade"> </div>
+	<input type="number" id="score" max="10" min="0" value="5">
+	<button id="colormode">Toggle Dark Mode</button>
+	<script>
+		$("#score").on('change', function () {
+			$('#grade').attr('data-score', $('#score').val())
+		})
+		$("#colormode").on('click', function () {
+			if ($('body').attr('data-theme') == 'dark')
+				$('body').attr('data-theme', 'light')
+			else
+				$('body').attr('data-theme', 'dark')
+		})
+	</script>
+</body>
+</html>

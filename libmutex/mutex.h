@@ -1,18 +1,10 @@
 #ifndef _MUTEX_H
 #define _MUTEX_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#define MAX_THREADS 3
 
-// void lamport_mutex_init ();
-// void lamport_mutex_lock (int thread_id);
-// void lamport_mutex_unlock (int thread_id);
-
-void print_test(void);
-
-#ifdef __cplusplus
-}
-#endif
+void lamport_mutex_init ();
+void lamport_mutex_lock (int thread_id);
+void lamport_mutex_unlock (int thread_id);
 
 #endif // _MUTEX_H
