@@ -1,2 +1,6 @@
 race_condtion 1.2536
 thread_mutex 0.2397
+
+lab
+race_condition 4,27
+thread_mutex 1,9196
